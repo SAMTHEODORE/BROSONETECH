@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+   <link rel="icon" href="/image/brosone.png">
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Gaming Desktop — BROS</title>
+  <style>
+    :root{
+      --bg1:#03040a; --bg2:#071029; --neon-pink:#ff2d95; --neon-cyan:#00f0ff; --neon-green:#39ff14; --muted:#9aa4b2;
+      font-family: 'Segoe UI', Roboto, Inter, system-ui, -apple-system, sans-serif;
+      --radius:12px; --glass: rgba(255,255,255,0.03);
+    }
+    html,body{height:100%;margin:0;background:radial-gradient(circle at 10% 10%, rgba(0,120,255,0.06), transparent 6%), linear-gradient(180deg,var(--bg1),var(--bg2));color:#dbeafe;overflow:hidden}
+    /* animated grid */
+    .stars{position:fixed;inset:0;pointer-events:none;background-image:radial-gradient(rgba(255,255,255,0.02) 1px, transparent 1px);background-size:30px 30px;opacity:0.25;mix-blend-mode:screen;filter:blur(0.6px)}
+    .vignette{position:fixed;inset:0;background: radial-gradient(ellipse at center, rgba(0,0,0,0) 40%, rgba(0,0,0,0.45) 100%);pointer-events:none}
+
+    .desktop{position:relative;height:100vh;padding:22px;box-sizing:border-box;display:flex;gap:24px}
+    /* left dock */
+    .dock{width:96px;display:flex;flex-direction:column;gap:12px}
+    .dock .logo{height:64px;width:64px;border-radius:14px;background:linear-gradient(135deg,var(--neon-pink),var(--neon-cyan));display:flex;align-items:center;justify-content:center;font-weight:700;color:#021;box-shadow:0 10px 40px rgba(0,0,0,0.6)}
+    .dock .icons{display:flex;flex-direction:column;gap:12px;margin-top:6px}
+    .dock .icon{width:72px;height:72px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.00));display:flex;align-items:center;justify-content:center;font-size:28px;cursor:pointer;border:1px solid rgba(255,255,255,0.03);box-shadow: 0 8px 30px rgba(0,0,0,0.6);transition:transform .12s, box-shadow .12s}
+    .dock .icon:hover{transform:translateY(-6px);box-shadow:0 18px 50px rgba(0,0,0,0.7)}
+    .dock .icon.glow{box-shadow:0 0 30px var(--neon-pink);}
+
+    /* center area */
+    .center{flex:1;display:flex;flex-direction:column}
+    .hero{flex:1;border-radius:16px;padding:20px;overflow:hidden;position:relative;border:1px solid rgba(255,255,255,0.03);background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));}
+    .hero .title{display:flex;align-items:center;gap:12px}
+    .hero h1{margin:0;font-size:22px;letter-spacing:0.6px}
+    .quick-launch{display:flex;gap:12px;margin-top:16px}
+    .ql{padding:10px;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));min-width:160px;cursor:pointer;border:1px solid rgba(255,255,255,0.03)}
+
+    /* right widgets */
+    .widgets{width:320px;display:flex;flex-direction:column;gap:12px}
+    .widget{padding:12px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.00));border:1px solid rgba(255,255,255,0.03)}
+    .widget h4{margin:0 0 8px;color:var(--muted);font-size:13px}
+
+    /* windows */
+    .window{position:absolute;min-width:340px;min-height:220px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.00));border-radius:12px;border:1px solid rgba(255,255,255,0.03);box-shadow:0 18px 60px rgba(1,3,8,0.7);overflow:hidden}
+    .titlebar{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;border-bottom:1px solid rgba(255,255,255,0.02);background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00))}
+    .titlebar .title{display:flex;gap:10px;align-items:center}
+    .controls{display:flex;gap:8px}
+    .btn{width:36px;height:28px;border-radius:8px;border:none;background:transparent;color:var(--muted);cursor:pointer}
+
+    /* neon accent border when focused */
+    .window.focus{box-shadow:0 30px 80px rgba(0,0,0,0.6), 0 0 22px var(--neon-cyan);}
+
+    /* game tiles */
+    .games-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+    .game{padding:12px;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));cursor:pointer;border:1px solid rgba(255,255,255,0.03);display:flex;flex-direction:column;gap:8px;align-items:flex-start}
+    .game .gthumb{width:100%;height:110px;border-radius:8px;background:linear-gradient(135deg,var(--neon-pink),var(--neon-cyan));display:flex;align-items:center;justify-content:center;font-weight:800}
+    .game small{color:var(--muted)}
+
+    /* system bars */
+    .bar{height:10px;background:rgba(255,255,255,0.04);border-radius:8px;overflow:hidden}
+    .bar-inner{height:100%;width:40%;background:linear-gradient(90deg,var(--neon-green),var(--neon-cyan));}
+
+    /* taskbar bottom */
+    .taskbar{position:fixed;left:20px;right:20px;bottom:16px;height:56px;border-radius:14px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.00));display:flex;align-items:center;padding:8px 12px;gap:12px;border:1px solid rgba(255,255,255,0.03);backdrop-filter: blur(6px)}
+    .tb-left{display:flex;gap:8px;align-items:center}
+    .tb-start{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--neon-pink),var(--neon-cyan));display:flex;align-items:center;justify-content:center;cursor:pointer}
+    .tb-icons{display:flex;gap:8px}
+    .tb-icon{width:44px;height:44px;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer}
+    .tb-right{margin-left:auto;display:flex;gap:10px;align-items:center;color:var(--muted)}
+
+    /* start menu */
+    .start-menu{position:fixed;left:20px;bottom:80px;width:420px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));border-radius:12px;padding:12px;border:1px solid rgba(255,255,255,0.03);box-shadow:0 20px 60px rgba(0,0,0,0.6);display:none}
+    .start-menu.show{display:block}
+
+    /* small tweaks */
+    .resizer{position:absolute;right:8px;bottom:8px;width:12px;height:12px;cursor:se-resize}
+    .hidden{display:none}
+
+    /* animated pulse */
+    @keyframes pulse {
+      0%{box-shadow:0 0 0 0 rgba(0,240,255,0.12)}
+      70%{box-shadow:0 0 0 18px rgba(0,240,255,0)}
+      100%{box-shadow:0 0 0 0 rgba(0,240,255,0)}
+    }
+    .pulse{animation: pulse 2.5s infinite}
+
+  </style>
+</head>
+<body>
+  <div class="stars"></div>
+  <div class="vignette"></div>
+
+  <div class="desktop" id="desktop">
+    <div class="dock">
+      <div class="logo">G</div>
+      <div class="icons">
+        <div class="icon" data-app="launcher">🎮</div>
+        <div class="icon" data-app="stats">📈</div>
+        <div class="icon" data-app="chat">💬</div>
+        <div class="icon" data-app="music">🎧</div>
+      </div>
+    </div>
+
+    <div class="center">
+      <div class="hero">
+        <div class="title"><h1>Gaming Desktop — Quick Launch</h1><div style="margin-left:8px;color:var(--muted);font-size:13px">Welcome, Player</div></div>
+        <div class="quick-launch">
+          <div class="ql" data-app="launcher">Open Launcher</div>
+          <div class="ql" data-app="stats">System Stats</div>
+          <div class="ql" data-app="chat">Open Chat</div>
+        </div>
+        <div style="margin-top:18px"><small style="color:var(--muted)">Recent games</small>
+          <div style="margin-top:10px" class="games-grid">
+            <div class="game"><div class="gthumb">R</div><strong>Riftblade</strong><small>Action · 2024</small></div>
+            <div class="game"><div class="gthumb">N</div><strong>Neon Drift</strong><small>Racing · 2023</small></div>
+            <div class="game"><div class="gthumb">A</div><strong>AstroCraft</strong><small>Strategy · 2025</small></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="widgets">
+      <div class="widget">
+        <h4>Now Playing</h4>
+        <div style="display:flex;gap:12px;align-items:center"><div style="width:56px;height:56px;border-radius:8px;background:linear-gradient(135deg,var(--neon-pink),var(--neon-cyan));display:flex;align-items:center;justify-content:center">♪</div>
+        <div><strong id="track">No track</strong><div style="color:var(--muted);font-size:13px">—</div></div></div>
+      </div>
+      <div class="widget">
+        <h4>Quick System</h4>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div><small style="color:var(--muted)">CPU</small><div class="bar"><div id="cpuBar" class="bar-inner" style="width:26%"></div></div></div>
+          <div><small style="color:var(--muted)">RAM</small><div class="bar"><div id="ramBar" class="bar-inner" style="width:45%"></div></div></div>
+          <div><small style="color:var(--muted)">GPU</small><div class="bar"><div id="gpuBar" class="bar-inner" style="width:14%"></div></div></div>
+        </div>
+      </div>
+      <div class="widget pulse" style="text-align:center">GAMING MODE: <strong style="color:var(--neon-pink)">ON</strong></div>
+    </div>
+
+    <!-- Start Menu -->
+    <div class="start-menu" id="startMenu">
+      <div style="display:flex;gap:12px;align-items:center;margin-bottom:8px"><div style="width:56px;height:56px;border-radius:8px;background:linear-gradient(135deg,var(--neon-pink),var(--neon-cyan));display:flex;align-items:center;justify-content:center">G</div>
+      <div><strong>Gamer</strong><div style="color:var(--muted);font-size:13px">Quick launch panel</div></div></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap"><div class="ql" data-app="launcher">Launcher</div><div class="ql" data-app="chat">Chat</div><div class="ql" data-app="settings">Settings</div></div>
+    </div>
+
+    <!-- Taskbar -->
+    <div class="taskbar" id="taskbar">
+      <div class="tb-left"><div class="tb-start" id="startBtn">☰</div><div class="tb-icons" id="tbIcons"></div></div>
+      <div class="tb-right" id="tbRight">🕒 <span id="time">--:--</span> &nbsp; | &nbsp; GPU: 14%</div>
+    </div>
+
+  </div>
+
+  <script>
+    // basic clock
+    function timeFmt(d){return d.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});}
+    setInterval(()=>document.getElementById('time').textContent = timeFmt(new Date()),1000);
+
+    const desktop = document.getElementById('desktop');
+    const tbIcons = document.getElementById('tbIcons');
+    const startBtn = document.getElementById('startBtn');
+    const startMenu = document.getElementById('startMenu');
+
+    const windows = {}; let z=50;
+
+    // openers
+    document.querySelectorAll('[data-app]').forEach(el=> el.addEventListener('dblclick', ()=> openApp(el.dataset.app)));
+    document.querySelectorAll('.ql').forEach(el=> el.addEventListener('click', ()=> openApp(el.dataset.app)));
+    startBtn.addEventListener('click', ()=> startMenu.classList.toggle('show'));
+    document.addEventListener('click', (e)=>{ if(!startMenu.contains(e.target) && !startBtn.contains(e.target)) startMenu.classList.remove('show'); });
+
+    function createWindow(id, title, html, x=140,y=100){
+      if(windows[id]) return focus(id);
+      const w = document.createElement('div'); w.className='window'; w.dataset.winId=id; w.style.left = x+'px'; w.style.top = y+'px'; w.style.zIndex = ++z;
+      w.innerHTML = `<div class="titlebar"><div class="title"><strong>${title}</strong></div><div class="controls"><button class="btn" data-act="min">—</button><button class="btn" data-act="max">◻</button><button class="btn" data-act="close">✕</button></div></div><div class="content">${html}</div><div class="resizer"></div>`;
+      desktop.appendChild(w);
+      windows[id] = {el:w,min:false}; addTbIcon(id,title);
+      makeDrag(w); makeResize(w); focus(id);
+    }
+    function focus(id){const o=windows[id]; if(!o) return; o.el.classList.add('focus'); o.el.style.zIndex=++z; setTimeout(()=>{o.el.classList.remove('focus')},1200);}
+    function closeWin(id){ if(!windows[id]) return; const el = windows[id].el; const tb = document.querySelector(`[data-task='${id}']`); if(tb) tb.remove(); el.remove(); delete windows[id]; }
+    function minWin(id){ const o=windows[id]; if(!o) return; o.el.style.display = 'none'; o.min = true; }
+    function toggleMin(id){ const o=windows[id]; if(!o) return; if(o.min){ o.el.style.display='block'; o.min=false; focus(id);} else minWin(id); }
+
+    function addTbIcon(id,title){ const b = document.createElement('div'); b.className='tb-icon'; b.textContent = title[0]||'G'; b.dataset.task=id; b.title=title; b.addEventListener('click', ()=> toggleMin(id)); tbIcons.appendChild(b); }
+
+    desktop.addEventListener('click',(e)=>{ const action = e.target.dataset.act; if(!action) return; const win = e.target.closest('.window'); const id = win && win.dataset.winId; if(action==='close'){closeWin(id);} if(action==='min'){minWin(id);} if(action==='max'){ if(win.classList.contains('max')){win.classList.remove('max');win.style.left='';win.style.top='';win.style.width='';win.style.height='';} else {win.classList.add('max');win.style.left='20px';win.style.top='20px';win.style.width=(window.innerWidth-160)+'px';win.style.height=(window.innerHeight-160)+'px';}} });
+
+    // drag
+    function makeDrag(el){ const title = el.querySelector('.titlebar'); let down=false,sx=0,sy=0,ox=0,oy=0; title.addEventListener('mousedown', (e)=>{ down=true; sx=e.clientX; sy=e.clientY; const r=el.getBoundingClientRect(); ox = r.left; oy = r.top; el.style.zIndex = ++z; e.preventDefault(); }); document.addEventListener('mousemove', (e)=>{ if(!down) return; let nx = ox + (e.clientX - sx); let ny = oy + (e.clientY - sy); nx = Math.max(8, Math.min(nx, window.innerWidth - el.offsetWidth - 8)); ny = Math.max(8, Math.min(ny, window.innerHeight - el.offsetHeight - 80)); el.style.left = nx+'px'; el.style.top = ny+'px'; }); document.addEventListener('mouseup', ()=> down=false); }
+    // resize
+    function makeResize(el){ const r = el.querySelector('.resizer'); if(!r) return; let resizing=false, sx=0, sy=0, sw=0, sh=0; r.addEventListener('mousedown', (e)=>{ resizing=true; sx=e.clientX; sy=e.clientY; sw=el.offsetWidth; sh=el.offsetHeight; e.preventDefault(); }); document.addEventListener('mousemove', (e)=>{ if(!resizing) return; el.style.width = Math.max(300, sw + (e.clientX - sx)) + 'px'; el.style.height = Math.max(180, sh + (e.clientY - sy)) + 'px'; }); document.addEventListener('mouseup', ()=> resizing=false); }
+
+    // templates
+    function launcherTpl(){ return `<div style="padding:8px"><div style="display:flex;gap:10px;flex-wrap:wrap"><div style="width:140px;padding:8px;border-radius:8px;background:linear-gradient(135deg,var(--neon-pink),var(--neon-cyan));text-align:center;cursor:pointer">Play Riftblade</div><div style="width:140px;padding:8px;border-radius:8px;background:linear-gradient(135deg,var(--neon-pink),var(--neon-cyan));text-align:center;cursor:pointer">Play Neon Drift</div><div style="width:140px;padding:8px;border-radius:8px;background:linear-gradient(135deg,var(--neon-pink),var(--neon-cyan));text-align:center;cursor:pointer">Play AstroCraft</div></div></div>`; }
+    function statsTpl(){ return `<div style="padding:8px"><div><small style="color:var(--muted)">CPU</small><div class="bar"><div id="cpu2" class="bar-inner" style="width:26%"></div></div></div><div style="margin-top:8px"><small style="color:var(--muted)">RAM</small><div class="bar"><div id="ram2" class="bar-inner" style="width:45%"></div></div></div><div style="margin-top:8px"><small style="color:var(--muted)">FPS</small><div style="font-size:18px;font-weight:700;"><span id="fps">60</span> <small style="color:var(--muted)">fps</small></div></div></div>`; }
+    function chatTpl(){ return `<div style="padding:8px;display:flex;flex-direction:column;height:360px"><div id="chatBox" style="flex:1;overflow:auto;border-radius:8px;padding:8px;background:rgba(0,0,0,0.2);border:1px solid rgba(255,255,255,0.02)"></div><div style="display:flex;gap:8px;margin-top:8px"><input id="chatIn" style="flex:1;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:inherit" placeholder="Say something..."/><button id="sendChat" class="btn">Send</button></div></div>`; }
+    function musicTpl(){ return `<div style="padding:8px"><div style="display:flex;gap:10px;align-items:center"><div style="width:56px;height:56px;border-radius:8px;background:linear-gradient(135deg,var(--neon-pink),var(--neon-cyan));display:flex;align-items:center;justify-content:center">♪</div><div><strong id="track2">No song</strong><div style="color:var(--muted);font-size:13px">Artist</div></div></div></div>`; }
+
+    function openApp(name){ if(name==='launcher') createWindow('win-launcher','Game Launcher', launcherTpl(), 160,110); if(name==='stats') createWindow('win-stats','System Stats', statsTpl(), 200,140); if(name==='chat') createWindow('win-chat','Chat', chatTpl(), 240,170); if(name==='music') createWindow('win-music','Music', musicTpl(), 260,200); if(name==='settings') createWindow('win-settings','Settings','<div style="padding:12px">Settings go here</div>',300,220);
+      setTimeout(()=>{ attachBehaviors(); },60);
+    }
+
+    // attach behaviors like chat
+    function attachBehaviors(){ const chatWin = document.querySelector('[data-win-id="win-chat"]'); if(chatWin){ const chatBox = chatWin.querySelector('#chatBox'); const inpt = chatWin.querySelector('#chatIn'); const btn = chatWin.querySelector('#sendChat'); btn.addEventListener('click', ()=>{ if(!inpt.value) return; const p = document.createElement('div'); p.textContent = 'You: '+inpt.value; p.style.margin='6px 0'; chatBox.appendChild(p); chatBox.scrollTop = chatBox.scrollHeight; inpt.value=''; }); }
+      // fake dynamic CPU/RAM values
+      const cpuBar = document.getElementById('cpu2'); const ramBar = document.getElementById('ram2'); const fps = document.getElementById('fps'); if(cpuBar && ramBar && fps){ setInterval(()=>{ const c = Math.floor(20 + Math.random()*65); const r = Math.floor(20 + Math.random()*70); cpuBar.style.width = c+'%'; ramBar.style.width = r+'%'; fps.textContent = Math.round(40 + Math.random()*40); },1200);} }
+
+    // open launcher on load
+    window.addEventListener('load', ()=>{ openApp('launcher'); openApp('stats'); });
+
+    // keyboard
+    document.addEventListener('keydown', (e)=>{ if(e.key==='Escape'){ document.querySelectorAll('.window').forEach(w=> w.remove()); } if(e.altKey && e.code==='Space'){ e.preventDefault(); startMenu.classList.toggle('show'); } });
+
+  </script>
+</body>
+</html>
+

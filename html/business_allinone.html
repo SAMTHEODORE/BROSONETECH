@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+ <link rel="icon" href="/image/brosone.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Product Switcher</title>
+<style>
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #1f1c2c, #928dab);
+    padding: 40px;
+    color: #fff;
+    margin: 0;
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 2.2rem;
+    margin-bottom: 20px;
+    color: #ffd700;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.4);
+  }
+
+  .menu {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .menu button {
+    padding: 12px 25px;
+    border: none;
+    background: rgba(255, 255, 255, 0.15);
+    cursor: pointer;
+    border-radius: 30px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #fff;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+  }
+
+  .menu button:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-3px);
+  }
+
+  .menu button.active {
+    background: linear-gradient(45deg, #ff4b2b, #ff416c);
+    color: #fff;
+    box-shadow: 0 4px 15px rgba(255, 65, 108, 0.4);
+  }
+
+  .product-section {
+    display: none;
+    padding: 25px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    backdrop-filter: blur(15px);
+    box-shadow: 0 4px 30px rgba(0,0,0,0.2);
+    max-width: 700px;
+    margin: auto;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.4s ease;
+  }
+
+  .product-section.active {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .product-section h2 {
+    font-size: 26px;
+    margin-bottom: 10px;
+    color: #ffd700;
+  }
+
+  .product-section p {
+    font-size: 16px;
+    line-height: 1.6;
+  }
+</style>
+</head>
+<body>
+
+<h1>🖥️ Product Switcher</h1>
+
+<div class="menu">
+  <button data-section="aio">All-in-One Desktop</button>
+  <button data-section="gaming">Gaming Desktop</button>
+  <button data-section="laptop">Laptop</button>
+</div>
+
+<div id="aio" class="product-section">
+  <h2>💻 All-in-One Desktop</h2>
+  <p>Experience the perfect blend of power and elegance with our All-in-One Desktop series — slim design, high performance, and clutter-free workspace.</p>
+</div>
+
+<div id="gaming" class="product-section">
+  <h2>🎮 Gaming Desktop</h2>
+  <p>Dominate the gaming world with cutting-edge graphics, lightning-fast processors, and immersive RGB lighting.</p>
+</div>
+
+<div id="laptop" class="product-section">
+  <h2>💼 Laptop</h2>
+  <p>Take your work and entertainment anywhere with sleek, powerful, and long-lasting laptops built for every lifestyle.</p>
+</div>
+
+<script>
+  const buttons = document.querySelectorAll('.menu button');
+  const sections = document.querySelectorAll('.product-section');
+
+  buttons.forEach(button => {
+    button.addEventListener('click', () => {
+      buttons.forEach(btn => btn.classList.remove('active'));
+      sections.forEach(section => section.classList.remove('active'));
+      button.classList.add('active');
+      document.getElementById(button.dataset.section).classList.add('active');
+    });
+  });
+
+  // Show All-in-One Desktop by default
+  buttons[0].click();
+</script>
+
+</body>
+</html>

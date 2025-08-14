@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="/image/brosone.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Accounting - Bros One Tech</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+        background: linear-gradient(135deg, #6ecfff, #4c6fff);
+        color: white;
+    }
+
+    header {
+        text-align: center;
+        padding: 60px 20px 30px;
+        animation: fadeInDown 1s ease-in-out;
+    }
+
+    header h1 {
+        font-size: 2.8rem;
+        font-weight: 600;
+    }
+
+    header p {
+        font-size: 1.2rem;
+        opacity: 0.85;
+        margin-top: 5px;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 40px auto;
+        padding: 20px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 25px;
+    }
+
+    .card {
+        background: rgba(255, 255, 255, 0.15);
+        border-radius: 15px;
+        padding: 25px;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        transition: transform 0.3s ease, background 0.3s ease;
+        animation: fadeInUp 0.8s ease forwards;
+    }
+
+    .card:hover {
+        transform: translateY(-8px);
+        background: rgba(255, 255, 255, 0.25);
+    }
+
+    .icon {
+        font-size: 40px;
+        margin-bottom: 15px;
+    }
+
+    h3 {
+        margin-bottom: 10px;
+        font-size: 1.3rem;
+        font-weight: 600;
+    }
+
+    p {
+        font-size: 0.95rem;
+        opacity: 0.85;
+        line-height: 1.5;
+    }
+
+    .cta {
+        display: block;
+        text-align: center;
+        margin: 40px auto;
+    }
+
+    .btn {
+        background: white;
+        color: #4c6fff;
+        padding: 14px 35px;
+        border-radius: 30px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: 0.3s ease;
+    }
+
+    .btn:hover {
+        background: #4c6fff;
+        color: white;
+    }
+
+    footer {
+        text-align: center;
+        padding: 20px;
+        background: rgba(0,0,0,0.2);
+        font-size: 0.9rem;
+        margin-top: 40px;
+    }
+
+    @keyframes fadeInDown {
+        from {opacity: 0; transform: translateY(-20px);}
+        to {opacity: 1; transform: translateY(0);}
+    }
+
+    @keyframes fadeInUp {
+        from {opacity: 0; transform: translateY(20px);}
+        to {opacity: 1; transform: translateY(0);}
+    }
+</style>
+</head>
+<body>
+
+<header>
+    <h1>Accounting Dashboard</h1>
+    <p>Manage finances with clarity, speed, and security</p>
+</header>
+
+<div class="container">
+    <div class="card">
+        <div class="icon">📊</div>
+        <h3>Real-time Insights</h3>
+        <p>Track income, expenses, and profits with live updates and powerful analytics.</p>
+    </div>
+
+    <div class="card">
+        <div class="icon">🧾</div>
+        <h3>Automated Invoicing</h3>
+        <p>Generate and send invoices instantly while keeping accurate payment records.</p>
+    </div>
+
+    <div class="card">
+        <div class="icon">📑</div>
+        <h3>Tax Compliance</h3>
+        <p>Stay compliant with built-in GST, VAT, and tax report generation tools.</p>
+    </div>
+
+    <div class="card">
+        <div class="icon">💼</div>
+        <h3>Multi-Currency</h3>
+        <p>Handle transactions in multiple currencies with auto conversion rates.</p>
+    </div>
+
+    <div class="card">
+        <div class="icon">🔒</div>
+        <h3>Secure Data</h3>
+        <p>All your financial data is encrypted and stored securely in the cloud.</p>
+    </div>
+</div>
+
+<div class="cta">
+    <a href="#" class="btn">Request a Demo</a>
+</div>
+
+<footer>
+    &copy; 2025 Bros One Tech. All Rights Reserved.
+</footer>
+
+</body>
+</html>

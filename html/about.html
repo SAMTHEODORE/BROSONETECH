@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="/image/brosone.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Us - Bros One Tech</title>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+        background: linear-gradient(135deg, #ff4c4c, #ff884c);
+        color: #fff;
+    }
+
+    header {
+        text-align: center;
+        padding: 50px 20px 20px;
+    }
+
+    header h1 {
+        font-size: 3rem;
+        letter-spacing: 2px;
+        animation: fadeInDown 1s ease-in-out;
+    }
+
+    header p {
+        font-size: 1.2rem;
+        opacity: 0.9;
+        animation: fadeIn 1.5s ease-in-out;
+    }
+
+    .about-section {
+        background: white;
+        color: #333;
+        margin: 30px auto;
+        border-radius: 20px;
+        padding: 40px;
+        max-width: 1100px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+        animation: fadeUp 1.5s ease-in-out;
+    }
+
+    .about-section h2 {
+        color: #ff4c4c;
+        margin-bottom: 15px;
+        font-size: 2rem;
+        text-align: center;
+    }
+
+    .about-section p {
+        text-align: center;
+        font-size: 1rem;
+        line-height: 1.8;
+        margin-bottom: 20px;
+    }
+
+    .features {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin-top: 30px;
+    }
+
+    .feature-card {
+        background: #fff3f3;
+        padding: 20px;
+        border-radius: 15px;
+        text-align: center;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    .feature-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 6px 25px rgba(0,0,0,0.2);
+    }
+
+    .feature-card h3 {
+        color: #ff4c4c;
+        margin-bottom: 10px;
+    }
+
+    footer {
+        text-align: center;
+        padding: 15px;
+        background: rgba(0,0,0,0.2);
+        margin-top: 30px;
+        font-size: 0.9rem;
+    }
+
+    /* Animations */
+    @keyframes fadeInDown {
+        from {opacity: 0; transform: translateY(-20px);}
+        to {opacity: 1; transform: translateY(0);}
+    }
+
+    @keyframes fadeUp {
+        from {opacity: 0; transform: translateY(30px);}
+        to {opacity: 1; transform: translateY(0);}
+    }
+
+    @keyframes fadeIn {
+        from {opacity: 0;}
+        to {opacity: 1;}
+    }
+</style>
+</head>
+<body>
+
+<header>
+    <h1>Bros One Tech</h1>
+    <p>Empowering Businesses with Smart POS Solutions</p>
+</header>
+
+<section class="about-section">
+    <h2>About Us</h2>
+    <p>
+        At <strong>Bros One Tech</strong>, we believe in transforming businesses with technology that’s fast, simple, and powerful. 
+        From point-of-sale solutions to inventory tracking, we provide tools that help you grow without limits.
+    </p>
+
+    <div class="features">
+        <div class="feature-card">
+            <h3>⚡ Fast Checkout</h3>
+            <p>Complete sales in seconds with our lightning-fast POS interface.</p>
+        </div>
+        <div class="feature-card">
+            <h3>📦 Smart Inventory</h3>
+            <p>Track your products in real time and stay in control of your stock.</p>
+        </div>
+        <div class="feature-card">
+            <h3>📊 Data Insights</h3>
+            <p>Make smart business decisions with clear and detailed sales reports.</p>
+        </div>
+        <div class="feature-card">
+            <h3>☁ Cloud Backup</h3>
+            <p>Securely store your data with automatic cloud backups.</p>
+        </div>
+    </div>
+</section>
+
+<footer>
+    &copy; 2025 Bros One Tech. All Rights Reserved.
+</footer>
+
+</body>
+</html>

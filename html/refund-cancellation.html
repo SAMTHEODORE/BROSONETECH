@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="/css/main.css" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Refund & Cancellation Policy — BROS ONE TECH</title>
+<style>
+  :root{
+    --primary:#c70039;
+    --dark-1:#111827;
+    --muted:#6b7280;
+    --card:#ffffff;
+    --bg:#f4f6fb;
+    --radius:14px;
+    --glass: rgba(255,255,255,0.6);
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family: "Inter", "Segoe UI", Roboto, Arial, sans-serif;
+    background: linear-gradient(180deg,#f7f9fc 0%, var(--bg) 60%);
+    color:var(--dark-1);
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+  }
+
+  /* Header */
+  header {
+    background: linear-gradient(135deg,var(--primary), #900c3f);
+    color: #fff;
+    padding: 56px 20px;
+    text-align: center;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+  }
+  header h1{ margin:0; font-size:2.4rem; letter-spacing:-0.5px; }
+  header p{ margin:8px 0 0; opacity:0.95; font-size:1.05rem; }
+
+  /* Container */
+  .wrap{ max-width:1100px; margin:28px auto; padding:0 20px; }
+
+  /* top summary card */
+  .hero{
+    background: linear-gradient(180deg, rgba(255,255,255,0.7), rgba(255,255,255,0.85));
+    border-radius:var(--radius);
+    padding:22px;
+    margin-bottom:18px;
+    box-shadow: 0 10px 25px rgba(16,24,40,0.06);
+    display:flex;
+    gap:18px;
+    align-items:center;
+  }
+  .hero .left{
+    flex:1;
+  }
+  .pill{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    padding:8px 12px;
+    border-radius:999px;
+    background:rgba(199,0,57,0.08);
+    color:var(--primary);
+    font-weight:600;
+    font-size:0.9rem;
+  }
+  .hero h2{ margin:10px 0 6px; font-size:1.25rem; }
+  .hero p{ margin:0; color:var(--muted); }
+
+  /* accordion / cards */
+  .grid{ display:grid; grid-template-columns: 1fr 360px; gap:20px; align-items:start; }
+  @media (max-width:960px){ .grid{ grid-template-columns: 1fr; } }
+
+  .card{
+    background:var(--card);
+    border-radius:12px;
+    padding:18px;
+    box-shadow: 0 8px 24px rgba(16,24,40,0.06);
+    transition: transform .22s ease, box-shadow .22s ease;
+  }
+  .card:hover{ transform: translateY(-6px); box-shadow: 0 18px 40px rgba(16,24,40,0.08); }
+
+  .section-title{ color:var(--primary); margin:0 0 10px; font-size:1.05rem; }
+
+  /* list */
+  .list{ margin:12px 0 0; padding:0; list-style:none; }
+  .list li{ padding:12px 0; border-bottom:1px dashed rgba(16,24,40,0.04); }
+  .list li:last-child{ border-bottom:none; }
+
+  .muted { color:var(--muted); font-size:0.95rem; }
+
+  /* right column */
+  .aside .box{ margin-bottom:14px; }
+  .small{ font-size:0.92rem; }
+
+  /* actions */
+  .actions{ display:flex; gap:10px; margin-top:14px; flex-wrap:wrap; }
+  .btn{
+    border:0; cursor:pointer; padding:10px 14px; border-radius:10px; font-weight:700;
+    background:transparent; color:var(--primary); border:1px solid rgba(199,0,57,0.12);
+  }
+  .btn.primary{ background:var(--primary); color:#fff; border-color:transparent; box-shadow:0 6px 18px rgba(199,0,57,0.14); }
+
+  /* acknowledge row */
+  .ack{ display:flex; gap:12px; align-items:center; margin-top:12px; }
+  .check{
+    width:20px; height:20px; border-radius:6px; border:1px solid rgba(16,24,40,0.08);
+    display:inline-flex; align-items:center; justify-content:center; cursor:pointer; background:#fff;
+  }
+  .check.checked{ background:var(--primary); color:#fff; border-color:var(--primary); }
+
+  footer{
+    margin-top:26px; text-align:center; color:var(--muted); font-size:0.92rem; padding:24px 0;
+  }
+
+  /* small helpers */
+  .muted-box{ background: linear-gradient(180deg, rgba(2,6,23,0.02), transparent); padding:10px; border-radius:10px; }
+  a { color:var(--primary); text-decoration:none; font-weight:600; }
+
+  /* animations */
+  @keyframes rise { from { opacity:0; transform:translateY(8px)} to { opacity:1; transform:none } }
+  .card, .hero { animation: rise .45s ease both; }
+</style>
+</head>
+<body>
+  <header>
+    <h1>Refund & Cancellation Policy</h1>
+    <p>BROS ONE TECH — Billing & GST Invoicing Software</p>
+  </header>
+
+  <div class="wrap">
+    <div class="hero">
+      <div class="left">
+        <div class="pill">Refund & Cancellation</div>
+        <h2>Clear, fair policies for subscriptions, invoices, and data</h2>
+        <p class="muted">This policy explains refund eligibility, cancellation procedures, data retention after cancellation, trial terms, and how we handle GST invoices.</p>
+      </div>
+      <div>
+        <div class="muted small">Last updated</div>
+        <strong id="lastUpdated">August 10, 2025</strong>
+        <div style="margin-top:8px" class="muted small">Questions? <a href="mailto:support@brosonetech.com">support@brosonetech.com</a></div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <!-- left: main content -->
+      <div>
+        <div class="card" id="eligibility">
+          <h3 class="section-title">1. Refund Eligibility</h3>
+          <ul class="list">
+            <li>
+              <strong>Subscription fees:</strong>
+              <div class="muted">Refunds are available within <strong>7 days</strong> of first-time subscription activation for annual subscriptions only, provided no commercial use (e.g., invoicing customers) has occurred. Monthly subscriptions are non-refundable after the billing cycle starts.</div>
+            </li>
+            <li>
+              <strong>Service outages:</strong>
+              <div class="muted">If we fail to deliver the service for a prolonged period due to our fault, prorated refunds or credits may be issued at our discretion.</div>
+            </li>
+            <li>
+              <strong>Trials:</strong>
+              <div class="muted">Free trials expire automatically. No automatic charges occur without explicit upgrade. If you are charged mistakenly during a trial, contact support for evaluation.</div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="card" id="how-to-cancel" style="margin-top:16px;">
+          <h3 class="section-title">2. Cancellation Process</h3>
+          <ol class="list" style="list-style:decimal; padding-left:18px;">
+            <li>
+              <strong>Self-service:</strong>
+              <div class="muted">Go to <em>Account → Billing → Cancel Subscription</em>. Cancellation takes effect at the end of the current billing cycle unless you have an eligible refund request.</div>
+            </li>
+            <li>
+              <strong>Support-assisted:</strong>
+              <div class="muted">Email <a href="mailto:support@brosonetech.com">support@brosonetech.com</a> with your account details to request immediate cancellation. We will confirm via email.</div>
+            </li>
+            <li>
+              <strong>Data export:</strong>
+              <div class="muted">Before cancellation, export invoices, GST reports, and customer data via the Data Export tool. We retain access to export only for a limited retention period post-cancellation (see Data Retention section).</div>
+            </li>
+          </ol>
+        </div>
+
+        <div class="card" id="data-retention" style="margin-top:16px;">
+          <h3 class="section-title">3. Data Retention & Deletion</h3>
+          <ul class="list">
+            <li>
+              <strong>Retention:</strong>
+              <div class="muted">Post-cancellation, we retain your account data for <strong>90 days</strong> to allow reactivation and exports. After 90 days, data may be permanently deleted unless retention is required by law.</div>
+            </li>
+            <li>
+              <strong>GST records:</strong>
+              <div class="muted">If you request deletion but legal/regulatory obligations (e.g., GST records retention) apply, we will retain required records as mandated by law and notify you.</div>
+            </li>
+            <li>
+              <strong>Special requests:</strong>
+              <div class="muted">Data deletion or extended retention requests can be made through support and may require identity verification.</div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="card" id="disputes" style="margin-top:16px;">
+          <h3 class="section-title">4. Disputes & Chargebacks</h3>
+          <ul class="list">
+            <li>
+              <strong>Contact first:</strong>
+              <div class="muted">Please contact support to resolve billing disputes before initiating chargebacks. Chargebacks may result in suspension of service and additional fees.</div>
+            </li>
+            <li>
+              <strong>Evidence:</strong>
+              <div class="muted">Provide invoicing, transaction IDs, and account details to help us investigate and, if applicable, issue credits or refunds.</div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="card" id="exceptions" style="margin-top:16px;">
+          <h3 class="section-title">5. Exceptions & Special Cases</h3>
+          <ul class="list">
+            <li>
+              <strong>Custom contracts:</strong>
+              <div class="muted">Enterprise plans with signed contracts follow the contract’s cancellation and refund clauses.</div>
+            </li>
+            <li>
+              <strong>Fraud & abuse:</strong>
+              <div class="muted">Accounts involved in fraud, chargeback abuse, or policy violations are not eligible for refunds.</div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- right: sidebar -->
+      <aside class="aside">
+        <div class="card box muted-box">
+          <strong>Quick Summary</strong>
+          <p class="muted small" style="margin-top:8px;">
+            • 7-day limited refund window for eligible annual signups. <br>
+            • Monthly plans billed per-cycle — generally non-refundable. <br>
+            • 90-days data retention after cancellation. <br>
+            • Contact <a href="mailto:support@brosonetech.com">support@brosonetech.com</a>.
+          </p>
+        </div>
+
+        <div class="card box">
+          <strong>Actions</strong>
+          <div class="actions" style="margin-top:12px;">
+            <button class="btn" id="printBtn">Print</button>
+            <button class="btn" id="downloadBtn">Download .txt</button>
+            <button class="btn primary" id="contactBtn">Contact Support</button>
+          </div>
+
+          <div class="ack" style="margin-top:12px;">
+            <div id="tick" class="check" role="checkbox" aria-checked="false" tabindex="0">✓</div>
+            <div>
+              <div style="font-weight:700">I acknowledge</div>
+              <div class="muted small">I have read the Refund & Cancellation Policy</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card box muted-box">
+          <strong>Legal</strong>
+          <p class="muted small" style="margin-top:8px;">Governing law: <strong>India</strong>. This policy is a summary guide — the full Terms & Conditions and service agreements govern disputes.</p>
+        </div>
+      </aside>
+    </div>
+
+    <footer>
+      <div>&copy; <span id="year"></span> BROS ONE TECH — All rights reserved.</div>
+    </footer>
+  </div>
+
+<script>
+  // Basic interactions
+  const today = new Date();
+  document.getElementById('year').textContent = today.getFullYear();
+
+  // Acknowledge checkbox
+  const tick = document.getElementById('tick');
+  const ackKey = 'brosonetech_refund_ack_v1';
+  function setChecked(v){
+    if(v){
+      tick.classList.add('checked');
+      tick.setAttribute('aria-checked','true');
+      localStorage.setItem(ackKey, new Date().toISOString());
+    }else{
+      tick.classList.remove('checked');
+      tick.setAttribute('aria-checked','false');
+      localStorage.removeItem(ackKey);
+    }
+  }
+  // init
+  setChecked(Boolean(localStorage.getItem(ackKey)));
+
+  tick.addEventListener('click', ()=> {
+    setChecked(tick.getAttribute('aria-checked') !== 'true');
+  });
+  tick.addEventListener('keydown', (e)=> {
+    if(e.key===' '|| e.key==='Enter'){ e.preventDefault(); tick.click(); }
+  });
+
+  // Contact button
+  document.getElementById('contactBtn').addEventListener('click', ()=> {
+    window.location.href = 'mailto:support@brosonetech.com?subject=Refund%20/ %20Cancellation%20Request';
+  });
+
+  // Print & download
+  document.getElementById('printBtn').addEventListener('click', ()=> window.print());
+
+  document.getElementById('downloadBtn').addEventListener('click', ()=> {
+    const text = buildPlainText();
+    const blob = new Blob([text], {type:'text/plain;charset=utf-8'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'BROS_ONE_TECH_Refund_Cancellation_Policy.txt';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  });
+
+  function buildPlainText(){
+    const lines = [];
+    lines.push('Refund & Cancellation Policy - BROS ONE TECH');
+    lines.push('Last updated: August 10, 2025');
+    lines.push('');
+    lines.push('1. Refund Eligibility');
+    lines.push('- Refunds available within 7 days of first-time annual subscription activation if service not used for commercial invoicing.');
+    lines.push('- Monthly subscriptions are generally non-refundable after billing starts.');
+    lines.push('');
+    lines.push('2. Cancellation Process');
+    lines.push('- Self-service: Account → Billing → Cancel Subscription. Cancellation effective end of billing cycle.');
+    lines.push('- Support-assisted: Email support@brosonetech.com to request immediate cancellation.');
+    lines.push('');
+    lines.push('3. Data Retention & Deletion');
+    lines.push('- Post-cancellation retention: 90 days for export or reactivation.');
+    lines.push('- GST records retained if required by law.');
+    lines.push('');
+    lines.push('4. Disputes & Chargebacks');
+    lines.push('- Contact support first to resolve disputes. Chargebacks may result in service suspension.');
+    lines.push('');
+    lines.push('5. Exceptions & Special Cases');
+    lines.push('- Enterprise contracts follow contract terms. Fraudulent accounts are not eligible for refunds.');
+    lines.push('');
+    lines.push('Contact: support@brosonetech.com');
+    return lines.join('\n');
+  }
+</script>
+</body>
+</html>

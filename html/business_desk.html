@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+   <link rel="icon" href="/image/brosone.png">
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Business Desktop — BROS</title>
+  <style>
+    :root{
+      --bg:#0f1724; /* dark navy */
+      --panel:#0b1220;
+      --accent:#c70039;
+      --muted:#9aa4b2;
+      --glass: rgba(255,255,255,0.03);
+      --taskbar: rgba(2,6,23,0.9);
+      --radius:12px;
+      --shadow: 0 10px 30px rgba(2,8,23,0.7);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    html,body{height:100%;margin:0;background:linear-gradient(180deg,#071226 0%, #071027 60%), var(--bg);color:#e6eef6}
+    /* desktop area */
+    .desktop{
+      position:relative;
+      height:100vh;
+      overflow:hidden;
+      padding:24px;
+      box-sizing:border-box;
+      background-image: radial-gradient( circle at 10% 10%, rgba(199,0,57,0.06), transparent 8% ), radial-gradient( circle at 90% 90%, rgba(0,120,255,0.02), transparent 12% );
+    }
+
+    /* icons grid */
+    .icons{
+      display:grid;
+      grid-template-columns: repeat(4, 90px);
+      gap:14px;
+      width:420px;
+    }
+    .icon{
+      width:90px;
+      text-align:center;
+      font-size:13px;
+      cursor:pointer;
+      user-select:none;
+    }
+    .icon .img{
+      width:64px;height:64px;border-radius:10px;background:linear-gradient(180deg,#142032,#0d1722);display:inline-flex;align-items:center;justify-content:center;box-shadow:var(--shadow);
+    }
+    .icon p{margin:8px 0 0;color:var(--muted);}
+
+    /* windows */
+    .window{
+      position:absolute;
+      min-width:360px;
+      min-height:220px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:12px;
+      box-shadow:0 8px 30px rgba(2,8,23,0.7);
+      border:1px solid rgba(255,255,255,0.03);
+      overflow:hidden;
+      transform-origin: left top;
+    }
+    .window[data-minimized="true"]{display:none}
+    .titlebar{
+      display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));border-bottom:1px solid rgba(255,255,255,0.02);
+    }
+    .titlebar .title{display:flex;gap:10px;align-items:center}
+    .titlebar .title .dot{width:10px;height:10px;border-radius:50%;background:var(--glass)}
+    .titlebar .controls{display:flex;gap:8px}
+    .btn{width:36px;height:28px;border-radius:8px;border:none;background:transparent;color:var(--muted);cursor:pointer}
+    .btn:hover{background:rgba(255,255,255,0.02)}
+
+    .content{padding:14px}
+    /* sample POS layout */
+    .pos-grid{display:grid;grid-template-columns: 1fr 380px;gap:14px}
+    .items{background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.02)}
+    .items .search{display:flex;gap:8px;margin-bottom:10px}
+    .items .product-list{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+    .product{padding:8px;border-radius:8px;background:var(--glass);cursor:pointer}
+
+    .checkout{background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.02);height:420px;display:flex;flex-direction:column}
+    .cart{flex:1;overflow:auto;margin-bottom:10px}
+    .cart-item{display:flex;justify-content:space-between;padding:8px;border-bottom:1px dashed rgba(255,255,255,0.02)}
+    .total{font-weight:700;font-size:18px;margin-bottom:10px}
+    .pay{display:flex;gap:8px}
+    .primary{background:var(--accent);color:white;padding:10px;border-radius:8px;border:none;cursor:pointer}
+
+    /* taskbar */
+    .taskbar{
+      position:fixed;left:12px;right:12px;bottom:12px;height:54px;background:var(--taskbar);backdrop-filter: blur(6px);border-radius:14px;display:flex;align-items:center;gap:12px;padding:6px 12px;box-shadow:0 12px 40px rgba(2,8,23,0.6);
+    }
+    .start{width:44px;height:44px;border-radius:10px;background:linear-gradient(180deg,#0b1220,#071226);display:flex;align-items:center;justify-content:center;cursor:pointer}
+    .task-icons{display:flex;gap:8px;align-items:center}
+    .task-icons .ticon{width:40px;height:40px;border-radius:8px;background:transparent;display:flex;align-items:center;justify-content:center;color:var(--muted);cursor:pointer}
+    .tray{margin-left:auto;display:flex;gap:8px;align-items:center;color:var(--muted);font-size:13px}
+
+    /* start menu */
+    .start-menu{position:fixed;left:12px;bottom:74px;width:320px;background:#071226;border-radius:14px;padding:12px;border:1px solid rgba(255,255,255,0.03);box-shadow:var(--shadow);display:none}
+    .start-menu.show{display:block}
+    .start-menu h4{margin:0 0 8px;color:var(--muted);font-weight:600}
+    .apps-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+    .start-app{padding:8px;border-radius:8px;background:var(--glass);text-align:center;font-size:12px}
+
+    /* helper */
+    .hidden{display:none}
+    .resizer{position:absolute;right:6px;bottom:6px;width:12px;height:12px;cursor:se-resize}
+
+    /* small screens adjustments */
+    @media (max-width:800px){
+      .icons{grid-template-columns:repeat(3,80px)}
+      .window{min-width:300px}
+    }
+
+  </style>
+</head>
+<body>
+  <div class="desktop" id="desktop">
+    <div class="icons" id="icons">
+      <div class="icon" data-app="pos">
+        <div class="img">💳</div>
+        <p>POS</p>
+      </div>
+      <div class="icon" data-app="invoices">
+        <div class="img">📄</div>
+        <p>Invoices</p>
+      </div>
+      <div class="icon" data-app="customers">
+        <div class="img">👥</div>
+        <p>Customers</p>
+      </div>
+      <div class="icon" data-app="reports">
+        <div class="img">📊</div>
+        <p>Reports</p>
+      </div>
+    </div>
+
+    <!-- Example windows will be created dynamically -->
+
+    <!-- Start Menu -->
+    <div class="start-menu" id="startMenu">
+      <h4>Start</h4>
+      <div class="apps-grid">
+        <div class="start-app" data-app="pos">POS</div>
+        <div class="start-app" data-app="invoices">Invoices</div>
+        <div class="start-app" data-app="customers">Customers</div>
+        <div class="start-app" data-app="reports">Reports</div>
+      </div>
+    </div>
+
+    <!-- Taskbar -->
+    <div class="taskbar" id="taskbar">
+      <div class="start" id="startBtn">☰</div>
+      <div class="task-icons" id="taskIcons"></div>
+      <div class="tray" id="tray">🕒 <span id="time">--:--</span></div>
+    </div>
+  </div>
+
+  <script>
+    // --- Utilities ---
+    const desktop = document.getElementById('desktop');
+    const taskIcons = document.getElementById('taskIcons');
+    const startBtn = document.getElementById('startBtn');
+    const startMenu = document.getElementById('startMenu');
+
+    function formatTime(d) {
+      return d.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
+    }
+    setInterval(()=>{document.getElementById('time').textContent = formatTime(new Date())},1000);
+
+    // Keep track of windows by id
+    const windows = {};
+    let zIndexCounter = 10;
+
+    // open app when icon clicked
+    document.querySelectorAll('.icon, .start-app').forEach(el=>{
+      el.addEventListener('dblclick',()=>openApp(el.dataset.app));
+      el.addEventListener('click',()=>{
+        // single click selects; double click opens
+      });
+    });
+
+    // Start menu toggle
+    startBtn.addEventListener('click', ()=>{ startMenu.classList.toggle('show'); });
+    document.addEventListener('click', (e)=>{ if(!startMenu.contains(e.target) && !startBtn.contains(e.target)) startMenu.classList.remove('show'); });
+
+    // create a new window
+    function createWindow(id, title, innerHTML, x=80, y=80){
+      if(windows[id]) return focusWindow(id);
+      const win = document.createElement('div');
+      win.className='window';
+      win.style.left = x+'px'; win.style.top = y+'px'; win.style.zIndex = ++zIndexCounter;
+      win.dataset.winId = id;
+
+      win.innerHTML = `
+        <div class="titlebar">
+          <div class="title"><div class="dot"></div><strong style="color:#e6eef6">${title}</strong></div>
+          <div class="controls">
+            <button class="btn" data-action="min">—</button>
+            <button class="btn" data-action="max">◻</button>
+            <button class="btn" data-action="close">✕</button>
+          </div>
+        </div>
+        <div class="content">${innerHTML}</div>
+        <div class="resizer"></div>
+      `;
+
+      desktop.appendChild(win);
+      makeDraggable(win);
+      makeResizable(win);
+      windows[id] = {el:win, minimized:false};
+      addTaskbarIcon(id, title);
+      focusWindow(id);
+    }
+
+    function focusWindow(id){
+      const w = windows[id];
+      if(!w) return;
+      w.el.style.zIndex = ++zIndexCounter;
+      w.el.classList.remove('hidden');
+      w.el.dataset.minimized = 'false';
+      w.minimized = false;
+    }
+
+    function closeWindow(id){
+      const w = windows[id];
+      if(!w) return;
+      // remove task icon
+      const t = document.querySelector(`.task-icons [data-task='${id}']`);
+      if(t) t.remove();
+      w.el.remove();
+      delete windows[id];
+    }
+
+    function minimizeWindow(id){
+      const w = windows[id]; if(!w) return;
+      w.el.dataset.minimized = 'true';
+      w.minimized = true;
+    }
+
+    function toggleMinimize(id){
+      const w = windows[id]; if(!w) return;
+      if(w.minimized) focusWindow(id); else minimizeWindow(id);
+    }
+
+    function addTaskbarIcon(id, title){
+      const btn = document.createElement('div');
+      btn.className='ticon'; btn.title = title; btn.textContent = title[0] || 'A';
+      btn.dataset.task = id;
+      btn.addEventListener('click', ()=>toggleMinimize(id));
+      taskIcons.appendChild(btn);
+    }
+
+    // wire controls
+    desktop.addEventListener('click', (e)=>{
+      const action = e.target.dataset.action;
+      if(!action) return;
+      const win = e.target.closest('.window');
+      const id = win && win.dataset.winId;
+      if(action==='close') closeWindow(id);
+      if(action==='min') minimizeWindow(id);
+      if(action==='max'){
+        if(win.classList.contains('max')){win.classList.remove('max');win.style.width='';win.style.height='';win.style.left='';win.style.top='';}
+        else {win.classList.add('max');win.style.left='12px';win.style.top='12px';win.style.right='12px';win.style.width = (window.innerWidth-48)+'px';win.style.height = (window.innerHeight-120)+'px';}
+      }
+    });
+
+    // Draggable
+    function makeDraggable(el){
+      const title = el.querySelector('.titlebar');
+      let isDown=false, startX=0, startY=0, origX=0, origY=0;
+      title.addEventListener('mousedown',(e)=>{
+        isDown=true; startX = e.clientX; startY = e.clientY; const rect = el.getBoundingClientRect(); origX = rect.left; origY = rect.top;
+        el.style.zIndex = ++zIndexCounter;
+        e.preventDefault();
+      });
+      document.addEventListener('mousemove',(e)=>{
+        if(!isDown) return;
+        let nx = origX + (e.clientX - startX);
+        let ny = origY + (e.clientY - startY);
+        // keep inside desktop
+        nx = Math.max(8, Math.min(nx, window.innerWidth - el.offsetWidth - 8));
+        ny = Math.max(8, Math.min(ny, window.innerHeight - el.offsetHeight - 80));
+        el.style.left = nx + 'px'; el.style.top = ny + 'px';
+      });
+      document.addEventListener('mouseup',()=>{isDown=false});
+
+      // focus when clicked
+      el.addEventListener('mousedown', ()=>{ el.style.zIndex = ++zIndexCounter; });
+    }
+
+    // Resizable
+    function makeResizable(el){
+      const res = el.querySelector('.resizer');
+      if(!res) return;
+      let isRes=false, startX=0, startY=0, startW=0, startH=0;
+      res.addEventListener('mousedown',(e)=>{isRes=true; startX=e.clientX; startY=e.clientY; startW=el.offsetWidth; startH=el.offsetHeight; e.preventDefault();});
+      document.addEventListener('mousemove',(e)=>{ if(!isRes) return; const dw = e.clientX - startX; const dh = e.clientY - startY; el.style.width = Math.max(300, startW + dw)+'px'; el.style.height = Math.max(180, startH + dh)+'px';});
+      document.addEventListener('mouseup',()=>{isRes=false});
+    }
+
+    // App templates
+    function posTemplate(){
+      return `
+      <div class="pos-grid">
+        <div class="items">
+          <div class="search"><input placeholder="Search product" style="flex:1;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit" id="prodSearch"/><button class="btn" id="addProdBtn">+ Add</button></div>
+          <div class="product-list" id="productList"></div>
+        </div>
+        <div class="checkout">
+          <div class="cart" id="cartArea"></div>
+          <div class="total">Total: ₹<span id="totalAmt">0.00</span></div>
+          <div class="pay"><button class="primary" id="payBtn">Pay</button><button class="btn" id="clearBtn">Clear</button></div>
+        </div>
+      </div>
+      `;
+    }
+
+    function invoicesTemplate(){
+      return `<div style="min-height:260px">This is a simple Invoices demo. You can paste invoice HTML here or wire a backend.</div>`;
+    }
+    function customersTemplate(){
+      return `<div style="min-height:260px">Customers list (demo) — add your interface here.</div>`;
+    }
+    function reportsTemplate(){
+      return `<div style="min-height:260px">Reports dashboard (demo) — charts and filters can be added.</div>`;
+    }
+
+    // openApp
+    function openApp(name){
+      if(name==='pos') createWindow('app-pos','POS', posTemplate(), 120, 90);
+      if(name==='invoices') createWindow('app-invoices','Invoices', invoicesTemplate(), 160, 140);
+      if(name==='customers') createWindow('app-customers','Customers', customersTemplate(), 180, 160);
+      if(name==='reports') createWindow('app-reports','Reports', reportsTemplate(), 200, 180);
+
+      // when POS created, attach behavior after next tick
+      setTimeout(()=>{
+        const win = document.querySelector('[data-win-id="app-pos"]');
+        if(!win) return;
+        // populate products
+        const products = [
+          {id:1,name:'Tea (Cup)',price:15}, {id:2,name:'Coffee',price:25}, {id:3,name:'Sandwich',price:80}, {id:4,name:'Notebook',price:120}, {id:5,name:'Pen',price:20}, {id:6,name:'Bottle',price:60}
+        ];
+        const productList = win.querySelector('#productList'); productList.innerHTML='';
+        products.forEach(p=>{ const el = document.createElement('div'); el.className='product'; el.textContent = `${p.name} — ₹${p.price}`; el.dataset.pid = p.id; el.dataset.price = p.price; el.addEventListener('click', ()=> addToCart(win, p)); productList.appendChild(el); });
+
+        // cart logic
+        if(!win._cart) win._cart = [];
+        function renderCart(){
+          const cartArea = win.querySelector('#cartArea'); cartArea.innerHTML=''; let total=0;
+          win._cart.forEach((it,i)=>{ const row = document.createElement('div'); row.className='cart-item'; row.innerHTML = `<div>${it.name} <small>×${it.qty}</small></div><div>₹${(it.price*it.qty).toFixed(2)}</div>`; cartArea.appendChild(row); total += it.price*it.qty;});
+          win.querySelector('#totalAmt').textContent = total.toFixed(2);
+        }
+        function addToCart(win, p){
+          const exist = win._cart.find(x=>x.id===p.id);
+          if(exist) exist.qty++; else win._cart.push({id:p.id,name:p.name,price:p.price,qty:1});
+          renderCart();
+        }
+        win.querySelector('#payBtn').addEventListener('click', ()=>{ alert('Paid ₹'+win.querySelector('#totalAmt').textContent); win._cart=[]; renderCart(); });
+        win.querySelector('#clearBtn').addEventListener('click', ()=>{ win._cart=[]; renderCart(); });
+
+      },50);
+    }
+
+    // double-click icons to open
+    document.querySelectorAll('.icon').forEach(ic=> ic.addEventListener('dblclick', ()=> openApp(ic.dataset.app)));
+
+    // start menu apps click
+    document.querySelectorAll('.start-app').forEach(s=> s.addEventListener('click', (e)=>{ openApp(s.dataset.app); startMenu.classList.remove('show'); }));
+
+    // handy: open POS on first load
+    window.addEventListener('load', ()=>{ openApp('pos'); });
+
+    // keyboard: Alt+Space to toggle start menu
+    document.addEventListener('keydown', (e)=>{ if(e.altKey && e.code==='Space'){ e.preventDefault(); startMenu.classList.toggle('show'); } });
+
+  </script>
+</body>
+</html>

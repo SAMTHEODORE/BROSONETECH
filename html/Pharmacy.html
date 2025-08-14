@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="/image/brosone.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bros One Tech - Pharmacy</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<style>
+    * {
+        margin: 0; padding: 0; box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+    }
+    body {
+        background: linear-gradient(135deg, #dff6f0, #a2d5f2);
+        color: #333;
+    }
+    /* Navbar */
+    nav {
+        position: fixed;
+        top: 0; left: 0; width: 100%;
+        display: flex; justify-content: space-between; align-items: center;
+        padding: 15px 50px;
+        background: rgba(255, 255, 255, 0.3);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        z-index: 1000;
+    }
+    nav h1 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #00796b;
+    }
+    nav ul {
+        display: flex;
+        list-style: none;
+    }
+    nav ul li {
+        margin-left: 20px;
+    }
+    nav ul li a {
+        text-decoration: none;
+        color: #333;
+        font-weight: 500;
+        transition: color 0.3s ease;
+    }
+    nav ul li a:hover {
+        color: #00796b;
+    }
+    /* Hero */
+    .hero {
+        height: 90vh;
+        display: flex; justify-content: center; align-items: center;
+        flex-direction: column;
+        text-align: center;
+        padding: 0 20px;
+    }
+    .hero h2 {
+        font-size: 3rem;
+        color: #004d40;
+        animation: fadeInDown 1s ease-in-out;
+    }
+    .hero p {
+        font-size: 1.2rem;
+        margin: 15px 0;
+        opacity: 0.8;
+    }
+    .hero button {
+        background: #00796b;
+        color: #fff;
+        border: none;
+        padding: 12px 25px;
+        font-size: 1rem;
+        border-radius: 30px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+    }
+    .hero button:hover {
+        background: #009688;
+    }
+    /* Product Section */
+    .products {
+        padding: 60px 30px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 30px;
+    }
+    .card {
+        background: rgba(255, 255, 255, 0.3);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+    }
+    .card img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
+    .card h3 {
+        padding: 15px;
+        font-size: 1.2rem;
+        color: #004d40;
+    }
+    .card p {
+        padding: 0 15px 15px;
+        color: #555;
+        font-size: 0.9rem;
+    }
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+    }
+    /* Animations */
+    @keyframes fadeInDown {
+        from {opacity: 0; transform: translateY(-20px);}
+        to {opacity: 1; transform: translateY(0);}
+    }
+</style>
+</head>
+<body>
+
+<nav>
+    <h1>Bros One Tech</h1>
+    <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Pharmacy</a></li>
+        <li><a href="#">Products</a></li>
+        <li><a href="#">Contact</a></li>
+    </ul>
+</nav>
+
+<section class="hero">
+    <h2>Your Trusted Online Pharmacy</h2>
+    <p>Safe, fast, and reliable medicines delivered to your door.</p>
+    <button>Shop Now</button>
+</section>
+
+<section class="products">
+    <div class="card">
+        <img src="https://via.placeholder.com/250x200?text=Medicine+1" alt="Medicine 1">
+        <h3>Paracetamol 500mg</h3>
+        <p>Effective pain relief & fever reducer.</p>
+    </div>
+    <div class="card">
+        <img src="https://via.placeholder.com/250x200?text=Medicine+2" alt="Medicine 2">
+        <h3>Vitamin C Tablets</h3>
+        <p>Boost immunity and overall health.</p>
+    </div>
+    <div class="card">
+        <img src="https://via.placeholder.com/250x200?text=Medicine+3" alt="Medicine 3">
+        <h3>Allergy Relief</h3>
+        <p>Fast relief from seasonal allergies.</p>
+    </div>
+</section>
+
+</body>
+</html>

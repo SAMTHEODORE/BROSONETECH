@@ -1,0 +1,256 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" href="/image/brosone.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login | BROS ONE TECH</title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="branding">
+      <h1><img src="/image/brosone.png" alt="" height="70px" width="70px"> BROS ONE TECH</h1>
+      <p>Your Gateway to Secure Access</p>
+    </div>
+
+    <div class="login-box">
+      <h2>Login with OTP</h2>
+      <form id="loginForm">
+        <input type="text" id="mobile" placeholder="Enter Mobile Number" required />
+        <button type="button" onclick="sendOTP()">Send OTP</button>
+      </form>
+
+      <div id="otpSection" style="display:none;">
+        <input type="text" id="otp" placeholder="Enter OTP" />
+        <button type="button" onclick="verifyOTP()">Verify OTP</button>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(to right, #667eea, #764ba2);
+  color: #fff;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  text-align: center;
+  padding: 20px;
+}
+
+.branding h1 {
+  font-size: 3rem;
+  letter-spacing: 2px;
+  margin-bottom: 0.5rem;
+}
+
+.branding p {
+  font-size: 1.1rem;
+  color: #e0e0e0;
+  margin-bottom: 2rem;
+}
+
+.login-box {
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 30px 40px;
+  border-radius: 15px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.3);
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.login-box h2 {
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 12px 15px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 8px;
+  background-color: #f0f0f0;
+  font-size: 1rem;
+  color: #333;
+}
+
+button {
+  width: 100%;
+  padding: 12px 15px;
+  margin-top: 10px;
+  background-color: #4CAF50;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+
+
+
+  </style>
+ 
+   <script>
+// const express = require('express');
+// const bodyParser = require('body-parser');
+// const sql = require('mssql');
+// const cors = require('cors');
+
+// const app = express();
+// app.use(cors());
+// app.use(bodyParser.json());
+
+// // SQL Server connection config
+// const dbConfig = {
+//     user: 'sa',
+//     password: '123',
+//     server: './',
+//     database: 'BROSONETECH',
+//     options: {
+//         encrypt: true, // if Azure SQL
+//         trustServerCertificate: true
+//     }
+// };
+
+// // Send OTP
+// app.post('/send-otp', async (req, res) => {
+//     const { mobile } = req.body;
+//     const otp = Math.floor(100000 + Math.random() * 900000); // generate 6-digit OTP
+
+//     try {
+//         let pool = await sql.connect(dbConfig);
+//         await pool.request()
+//             .input('mobile', sql.VarChar, mobile)
+//             .input('otp', sql.Int, otp)
+//             .query(`INSERT INTO OTP_Table (mobile, otp) VALUES (@mobile, @otp)`);
+
+//         // TODO: Send OTP via SMS API like Twilio, Fast2SMS, etc.
+//         res.json({ success: true, otp }); // Send otp for testing
+//     } catch (err) {
+//         console.error(err);
+//         res.status(500).json({ error: 'Database error' });
+//     }
+// });
+
+// // Verify OTP
+// app.post('/verify-otp', async (req, res) => {
+//     const { mobile, otp } = req.body;
+
+//     try {
+//         let pool = await sql.connect(dbConfig);
+//         const result = await pool.request()
+//             .input('mobile', sql.VarChar, mobile)
+//             .input('otp', sql.Int, otp)
+//             .query(`SELECT * FROM OTP_Table WHERE mobile = @mobile AND otp = @otp`);
+
+//         if (result.recordset.length > 0) {
+//             res.json({ success: true, message: 'OTP Verified!' });
+//         } else {
+//             res.json({ success: false, message: 'Invalid OTP' });
+//         }
+//     } catch (err) {
+//         console.error(err);
+//         res.status(500).json({ error: 'Database error' });
+//     }
+// });
+
+// app.listen(3000, () => console.log('Server running on http://localhost:3000'));
+
+
+function sendOTP() {
+  const mobile = document.getElementById('mobile').value;
+  if (!mobile.match(/^\d{10}$/)) {
+    alert('Please enter a valid 10-digit mobile number.');
+    return;
+  }
+
+  // Simulate sending OTP (replace with API call)
+  console.log("Sending OTP to", mobile);
+  
+  document.getElementById('otpSection').style.display = 'block';
+}
+
+function verifyOTP() {
+  const otp = document.getElementById('otp').value;
+  if (!otp) {
+    alert('Please enter the OTP');
+    return;
+  }
+
+  // Simulate OTP verification (replace with API call)
+  console.log("Verifying OTP:", otp);
+  
+  // Mock response
+  alert('OTP Verified! Redirecting...');
+}
+
+
+
+// async function sendOTP() {
+//   const mobile = document.getElementById('mobile').value;
+//   if (!mobile.match(/^\d{10}$/)) {
+//     alert('Please enter a valid 10-digit mobile number.');
+//     return;
+//   }
+
+//   const response = await fetch('http://localhost:3000/send-otp', {
+//     method: 'POST',
+//     headers: { 'Content-Type': 'application/json' },
+//     body: JSON.stringify({ mobile })
+//   });
+//   const data = await response.json();
+
+//   if (data.success) {
+//     document.getElementById('otpSection').style.display = 'block';
+//     console.log("OTP sent:", data.otp); // For testing only
+//   } else {
+//     alert('Error sending OTP');
+//   }
+// }
+
+// async function verifyOTP() {
+//   const mobile = document.getElementById('mobile').value;
+//   const otp = document.getElementById('otp').value;
+
+//   const response = await fetch('http://localhost:3000/verify-otp', {
+//     method: 'POST',
+//     headers: { 'Content-Type': 'application/json' },
+//     body: JSON.stringify({ mobile, otp })
+//   });
+//   const data = await response.json();
+
+//   if (data.success) {
+//     alert('OTP Verified! Redirecting...');
+//     // window.location.href = '/dashboard.html';
+//   } else {
+//     alert('Invalid OTP');
+//   }
+// }
+</script>
+
+
+
+</body>
+</html>
+
